@@ -1,8 +1,10 @@
-public class Circle extends Shape {
+import processing.core.PApplet;
+
+public class Circle extends Shape{
     private float radius;
 
     public Circle(Point location, float radius, float xspeed, float yspeed, Color color) {
-        super(location, radius*2, radius*2, xspeed, yspeed, color);
+        super(location, xspeed, yspeed, color);
         this.radius = radius;
     }
 
@@ -26,5 +28,24 @@ public class Circle extends Shape {
     @Override
     public double getPerimeter() {
         return 2 * Math.PI * radius;
+    }
+
+    @Override
+    public void render(PApplet pApplet) {
+        pApplet.fill(getColor().getR(), getColor().getG(), getColor().getB());
+        pApplet.ellipse(location.getX(), location.getY(), radius * 2, radius * 2);
+    }
+
+    @Override
+    public void move() {
+        location.setX(location.getX() + xspeed);
+        location.setY(location.getY() + yspeed);
+
+        if (location.getX() > 800 - radius || location.getX() < radius) {
+            xspeed *= -1;
+        }
+        if (location.getY()> 600 - radius || location.getY() < radius) {
+            yspeed *= -1;
+        }
     }
 }

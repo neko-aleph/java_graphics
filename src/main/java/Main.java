@@ -3,8 +3,6 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 public class Main extends PApplet {
-    private ArrayList<Circle> circles = new ArrayList<>();
-    private ArrayList<Square> squares = new ArrayList<>();
     private ArrayList<Shape> shapes = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -19,20 +17,7 @@ public class Main extends PApplet {
         background(102);
         for (Shape shape : shapes) {
             shape.move();
-        }
-        for (Circle circle : circles) {
-            Color c = circle.getColor();
-            fill(c.getR(), c.getG(), c.getB());
-            Point location = circle.getLocation();
-            float radius = circle.getRadius();
-            ellipse(location.getX(), location.getY(), radius * 2, radius * 2);
-        }
-        for (Square square : squares) {
-            Color c = square.getColor();
-            fill(c.getR(), c.getG(), c.getB());
-            Point location = square.getLocation();
-            float side = square.getSide();
-            rect(location.getX(), location.getY(), side, side);
+            shape.render(this);
         }
     }
 
@@ -48,18 +33,14 @@ public class Main extends PApplet {
             if (rnd < 0.5) {
                 float radius = random(10, 30);
                 Circle circle = new Circle(mouseX, mouseY, radius, xspeed , yspeed, c);
-                circles.add(circle);
                 shapes.add(circle);
             } else {
                 float side = random(10, 25);
                 Square square = new Square(mouseX, mouseY, side, xspeed, yspeed, c);
-                squares.add(square);
                 shapes.add(square);
             }
 
         } else if (mouseButton == RIGHT) {
-            circles.clear();
-            squares.clear();
             shapes.clear();
         }
     }
